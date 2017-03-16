@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Souper Girl Tests</title>
+</head>
+<body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+
+  <link href="https://cdn.snipcart.com/themes/2.0/base/snipcart.min.css" type="text/css" rel="stylesheet" />
+  <div>
+  <div style="display: inline-block;
+    width: 350px;
+    height: 175px;
+    margin: 10px;
+    text-align:center;">
+    <center>
+      <img style="width:240px;" src="https://www.my7daydiet.com/images/wonder-soup.jpg" alt="">
+    </center>
+    <h1> Souper 'Cleanse' 1 </h1>
+    <div id="contentBox1" style="text-align:left; height:250px;">
+      Each week's cleanse includes: 20 homemade, fully cooked soups
+      A personalized daily menu and nutritional guide.
+      Your "Cleanse" will be delivered on SCRIPT HERE between 4:00 and 8:00 PM or you can pick it up from our Takoma Location.
+      <br><br>
+      1 Week - $135<br>
+      2 Weeks - $255<br>
+      4 Weeks - $500<br>
+      8 Weeks - $980
+    </div>
+    <button id="buyBTTN1">Buy Button</button>
+
+    <div id="deliveryOptionsBox" style="display:none">
+      <h4>Pickup or delivery</h4>
+      <select name="delieveryMethod">
+        <option value="selectOne">Select one </option>
+        <option value="pickup">I would like to pickup in Takoma</option>
+        <option value="delivery">I would like to have it delievered</option>
+      </select>
+    </div>
+
+    <div id="pickupBOXandBuyBTN" style="display:none;">
+      <br>
+      You will soup will be available for pickup at this time at this location
+      <br><br>
+      <button
+        class="snipcart-add-item"
+        data-item-id="2"
+        data-item-name="Souper 'Cleanse' 1 (Pickup)"
+        data-item-price="135.00"
+        data-item-url="http://myapp.com/products/bacon2"
+        data-item-description="blurb about souper cleanse 1"
+        data-item-custom1-name="Weeks"
+        data-item-custom1-options="1|2[+120.00]|4[+365.00]|8[+845.00]"
+        data-item-custom1-value="One Week"
+        >Continue to Checkout</button>
+    </div>
+
+    <div id="deliveryBOXandBuyBTN" style="display:none;">
+      <div>
+        <br>
+        Enter your zip to check if we deliver the Souper "Cleanse" to you.
+      </div>
+      <input id="zipInput" type="text" />
+      <br>
+      <button id="zipBTN">Submit</button>
+      <div id="zipAnswer1" style="display:none;">
+        <br>
+        Don't deliver to you at this time
+      </div>
+      <div id="zipAnswer2" style="display:none;">
+        <br>
+        We delievery to your zipcode!
+        <br>
+        Procedde to check out to purchase Souper 'Cleanse' 1
+        <br><br>
+        If you have any allergie questions please email thesoupergirl@gmail.com<br>
+        <button
+          class="snipcart-add-item"
+          data-item-id="3"
+          data-item-name="Souper 'Cleanse' 1 (Delivery)"
+          data-item-price="135.00"
+          data-item-url="http://myapp.com/products/bacon2"
+          data-item-description="blurb about souper cleanse 1 deliver option"
+          data-item-custom1-name="Weeks"
+          data-item-custom1-options="1|2[+120.00]|4[+365.00]|8[+845.00]"
+          data-item-custom1-value="One Week"
+          >Continue to Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function zipcheck () {
+      var okZips = ['1','2','3'];
+      var value = document.getElementById('zipInput').value;
+      var found = okZips.includes(value);
+      if (found) {
+        document.getElementById('zipAnswer1').hide();
+        document.getElementById('zipAnswer2').show();
+      }
+      else {
+        document.getElementById('zipAnswer1').show();
+        document.getElementById('zipAnswer2').hide();
+      }
+    }
+    document.getElementById( "zipBTN" ).addEventListener('click', function() {
+      zipcheck ();
+    });
+  </script>
+
+  <script>
+    document.getElementById('buyBTTN1').addEventListener('click', function() {
+    document.getElementById('contentBox1').style.display = 'none';
+    document.getElementById('buyBTTN1').style.display = 'none';
+    document.getElementById('deliveryOptionsBox').style.display = 'block';
+    })
+
+    // select pickup or delivery sets up specific CART SCRIPT TOO
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('select[name="delieveryMethod"]').onchange=changeEventHandler;
+      },false);
+    function changeEventHandler(event) {
+      var pickupCheckoutScript = document.createElement('script');
+      var deliveryCheckoutScript = document.createElement('script');
+      if (event.target.value === 'pickup') {
+        document.getElementById('deliveryBOXandBuyBTN').style.display = 'none';
+        document.getElementById('pickupBOXandBuyBTN').style.display = 'block';
+        pickupCheckoutScript.setAttribute('src','https://cdn.snipcart.com/scripts/2.0/snipcart.js');
+        pickupCheckoutScript.setAttribute('type','text/javascript');
+        pickupCheckoutScript.setAttribute('id','snipcart');
+        pickupCheckoutScript.setAttribute('data-api-key','OWVlOGQxMTQtY2JiOC00ZWIwLWFlNzYtYmYxNjAxN2JkYWQ3NjM2MjQ0MDU4NjU2MTg1NDMw');
+        pickupCheckoutScript.setAttribute('data-cart-custom1-name','I understand the disclaimer and terms of use regarding the purchase of this product.');
+        pickupCheckoutScript.setAttribute('data-cart-custom1-options','true|false');
+        pickupCheckoutScript.setAttribute('data-cart-custom1-required','true');
+
+        document.head.appendChild(pickupCheckoutScript);
+      }
+      else {
+        document.getElementById('deliveryBOXandBuyBTN').style.display = 'block';
+        document.getElementById('pickupBOXandBuyBTN').style.display = 'none';
+        deliveryCheckoutScript.setAttribute('src','https://cdn.snipcart.com/scripts/2.0/snipcart.js');
+        deliveryCheckoutScript.setAttribute('type','text/javascript');
+        deliveryCheckoutScript.setAttribute('id','snipcart');
+        deliveryCheckoutScript.setAttribute('data-api-key','OWVlOGQxMTQtY2JiOC00ZWIwLWFlNzYtYmYxNjAxN2JkYWQ3NjM2MjQ0MDU4NjU2MTg1NDMw');
+        deliveryCheckoutScript.setAttribute('data-cart-custom1-name','Delivery Address Street City Zipcode');
+        deliveryCheckoutScript.setAttribute('data-cart-custom2-name','Addtional Delivery Instructions');
+        deliveryCheckoutScript.setAttribute('data-cart-custom3-name','I understand the disclaimer and terms of use regarding the purchase of this product.');
+        deliveryCheckoutScript.setAttribute('data-cart-custom3-options','true|false');
+        deliveryCheckoutScript.setAttribute('data-cart-custom3-required','true');
+
+        document.head.appendChild(deliveryCheckoutScript);
+      }
+    }
+
+  </script>
+
+  <!-- <script
+    id="snipcart"
+    data-api-key="OWVlOGQxMTQtY2JiOC00ZWIwLWFlNzYtYmYxNjAxN2JkYWQ3NjM2MjQ0MDU4NjU2MTg1NDMw"
+    data-cart-custom1-name="If different than your billing address please tell us where you would like soup delivered"
+    data-cart-custom2-name="Street"
+    data-cart-custom3-name="City"
+    data-cart-custom4-name="Zip"
+    data-cart-custom5-name="Additional Delivery Instruction"
+    data-cart-custom6-name="I understand the disclaimer and terms of use regarding the purchase of this product."
+    data-cart-custom6-options="true|false"
+    data-cart-custom6-required="true"
+    src="https://cdn.snipcart.com/scripts/2.0/snipcart.js" type="text/javascript">
+  </script> -->
+
+
+
+
+
+
+  <!-- <div style="display: inline-block;
+    width: 350px;
+    height: 175px;
+    margin: 10px;
+    text-align:center;">
+    <center>
+      <img style="width:240px;" src="https://www.my7daydiet.com/images/wonder-soup.jpg" alt="">
+    </center>
+    <h1> Souper 'Cleanse' 2 </h1>
+    <div style="text-align:left;height:250px;">
+      Each week's cleanse includes: 20 homemade, fully cooked soups
+      A personalized daily menu and nutritional guide
+      Your "Cleanse" will be delivered on SCRIPT HERE between 4:00 and 8:00 PM!
+      <br><br>
+      1 Week - $135<br>
+      2 Weeks - $255<br>
+      4 Weeks - $500<br>
+      8 Weeks - $980
+    </div>
+  </div> -->
+
+
+
+  <!-- <div style="display: inline-block;
+    width: 350px;
+    margin: 10px;
+    text-align:center;">
+    <h1>Pickup or delivery</h1>
+    <select name="delieveryMethod">
+      <option value="selectOne">Select one </option>
+      <option value="pickup">I would like ot pickup in Takoma</option>
+      <option value="delivery">I would like to have it delievered</option>
+    </select>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          document.querySelector('select[name="delieveryMethod"]').onchange=changeEventHandler;
+        },false);
+      function changeEventHandler(event) {
+        if (event.target.value === 'delivery') console.log ('yo!')
+        else console.log('no')
+      }
+    </script>
+    <div id="zipCheckBox">
+      <div>
+        Enter your zip to check if we deliver the Souper "Cleanse" to you.
+      </div>
+      <input id="test" type="text" />
+      <br>
+      <button>Submit</button>
+      <div style="height:30px;"></div>
+      <div id="zipAnswer">Answer will display here</div>
+      <div style="height:148px;"></div>
+      <div>.</div>
+    </div>
+  </div>
+
+  <div style="display: inline-block;
+    width: 350px;
+    height: 175px;
+    margin: 10px;
+    text-align:center;">
+    <center>
+      <img style="width:240px;" src="https://www.my7daydiet.com/images/wonder-soup.jpg" alt="">
+    </center>
+    <div style="text-align:left; height:250px;">
+      Each week's cleanse includes: 20 homemade, fully cooked soups
+      A personalized daily menu and nutritional guide
+      Your "Cleanse" will be delivered on SCRIPT HERE between 4:00 and 8:00 PM!
+      <br><br>
+      1 Week - $135<br>
+      2 Weeks - $255<br>
+      4 Weeks - $500<br>
+      8 Weeks - $980
+    </div>
+    <button
+      class="snipcart-add-item"
+      data-item-id="2"
+      data-item-name="Souper 'Cleanse' 1"
+      data-item-price="135.00"
+      data-item-url="http://myapp.com/products/bacon"
+      data-item-description="Each week's cleanse includes: 20 homemade, fully cooked soups A personalized daily menu and nutritional guide. Your 'Cleanse' will be delivered on Monday, March 13th between 4:00 and 8:00 PM!"
+      data-item-custom1-name="Weeks"
+      data-item-custom1-options="1|2[+120.00]|4[+365.00]|8[+845.00]"
+      data-item-custom1-value="One Week"
+      >
+      Souper Cleanse 1
+    </button>
+  </div>
+  <div style="display: inline-block;
+    width: 350px;
+    height: 175px;
+    margin: 10px;
+    text-align:center;">
+    <center>
+      <img style="width:240px;" src="https://www.my7daydiet.com/images/wonder-soup.jpg" alt="">
+    </center>
+    <div style="text-align:left;height:250px;">
+      Each week's cleanse includes: 20 homemade, fully cooked soups
+      A personalized daily menu and nutritional guide
+      Your "Cleanse" will be delivered on SCRIPT HERE between 4:00 and 8:00 PM!
+      <br><br>
+      1 Week - $135<br>
+      2 Weeks - $255<br>
+      4 Weeks - $500<br>
+      8 Weeks - $980
+    </div>
+    <button
+      class="snipcart-add-item"
+      data-item-id="3"
+      data-item-name="Souper 'Cleanse' 2"
+      data-item-price="135.00"
+      data-item-url="http://myapp.com/products/bacon2"
+      data-item-description="blurb about souper cleanse 2"
+      data-item-custom1-name="Weeks"
+      data-item-custom1-options="1|2[+120.00]|4[+365.00]|8[+845.00]"
+      data-item-custom1-value="One Week"
+      >
+      Souper Cleanse 2
+    </button>
+  </div>
+
+
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <link href="https://cdn.snipcart.com/themes/2.0/base/snipcart.min.css" type="text/css" rel="stylesheet" />
+  <script>
+
+  </script>
+  <script>
+    function zipcheck () {
+      var okZips = ['1','2','3'];
+      var value = document.getElementById('test').value;
+      var found = okZips.includes(value);
+      if (found) { alert ('yes') } else { alert ('no') } }
+  </script>
+  <script>console.log('hello')</script>
+  <script
+    id="snipcart"
+    data-api-key="OWVlOGQxMTQtY2JiOC00ZWIwLWFlNzYtYmYxNjAxN2JkYWQ3NjM2MjQ0MDU4NjU2MTg1NDMw"
+    data-cart-custom1-name="Pickup Option"
+    data-cart-custom1-options="Please deliver to me | I can pick up at your Takoma Location"
+    data-cart-custom1-required="true"
+    data-cart-custom2-name="Choose Zip to see if we deliver to you!"
+    data-cart-custom2-options= "11106|12345|7548|9823|2319|47932"
+    data-cart-custom2-required="true"
+    data-cart-custom3-name="Additional Delivery Instruction"
+    data-cart-custom4-name="If different than your billing address please tell us where you would like soup delivered"
+    data-cart-custom5-name="I understand the disclaimer and terms of use regarding the purchase of this product."
+    data-cart-custom5-options="true|false"
+    data-cart-custom5-required="true"
+    src="https://cdn.snipcart.com/scripts/2.0/snipcart.js" type="text/javascript">
+  </script> -->
+</body>
+</html>
