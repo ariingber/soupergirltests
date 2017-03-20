@@ -9,7 +9,27 @@
 <body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
   <link href="https://cdn.snipcart.com/themes/2.0/base/snipcart.min.css" type="text/css" rel="stylesheet" />
-  <div>
+
+  <div id="zip1Check" style="background:pink; height:100px;">
+    <br>
+    Enter your zipcode and see if we deliver 'Souper Cleanse' to you. (For now 1 is the only valid zipcode for tests)
+    <form id="zip1form">
+      <input id="zip1Input" type="text" />
+      <input id="zip1BTN" type="submit"></input>
+    </form>
+    <div id="zip1Answer1" style="display:none;">
+      <br>
+      We do not deliver to you at this time but you can pickup your order from our Takoma location.  Proceed to checkout!
+    </div>
+    <div id="zip1Answer2" style="display:none;">
+      <br>
+      We do deliever to you!!  Proceed to checkout!
+      <br>
+    </div>
+  </div>
+
+
+  <div id="souperCleanse1">
     <div id="cleanse1Block" style="display: inline-block;
       width: 350px;
       height: 600px;
@@ -32,10 +52,10 @@
         4 Weeks - $500<br>
         8 Weeks - $980
       </div>
-      <button id="buyBTTN1">Buy Button</button>
+      <button id="buyBTTN1">Checkout</button>
 
       <div id="deliveryOptionsBox" style="display:none; text-align:left; height:250px;">
-        <div>Pickup or delivery</div>
+        <div>Choose Pickup or Delivery</div>
         <select name="deliveryMethod" id="delOPTS">
           <option value="selectOne">Select one </option>
           <option value="pickup">I would like to pickup in Takoma</option>
@@ -44,23 +64,28 @@
       </div>
 
       <div id="pickupBOXandBuyBTN" style="display:none;">
-        <div id="pickupMessage1" class="pickupMessage" style="display:none;">pickup message 1 <br></div>
-        <div id="pickupMessage2" class="pickupMessage" style="display:none;">pickup message 2 (failed zipcheck 2)<br></div>
-        <button id="pickupCheckoutButton" style="display:none;">Checkout</button>
-        <button id="pickupBackBTN" style="display:none;">Back</button>
+        <center id="pickupBOXCenter">
+          <div id="pickupMessage1" class="pickupMessage" style="display:none;">Pickup Message 1 (could include actual address ect.)<br><br></div>
+          <div id="pickupMessage2" class="pickupMessage" style="display:none;">Pickup Message 2 (failed zipcheck directed to pickup)<br><br></div>
+          <button id="pickupCheckoutButton" style="display:none;">Add To Cart</button>
+          <button id="pickupBackBTN" style="display:none;">Back</button>
+        </center>
       </div>
 
       <div id="deliveryBOXandBuyBTN" style="display:none;">
-        <div id="deliveryMessage" style="display:none;">delivery message<br></div>
-        <div id="zip2CodeBox" style="display:none;">
-          <br>
-          Enter your zip to check if we deliver the Souper "Cleanse" to you.
-          <input id="zip2Input" type="text" />
-          <br>
-          <button id="zip2BTN">Submit</button>
-        </div>
-        <button id="deliveryCheckoutButton" style="display:none;">D Checkout</button>
-        <button id="deliveryBackBTN" style="display:none;">Back</button>
+        <center id="deliveryBOXCenter">
+          <div id="deliveryMessage" style="display:none;"> Delivery Message 1<br><br></div>
+          <div id="deliveryMessage2" style="display:none;">Yes we deliver to you!  Add Souper Cleanse to your Cart<br><br></div>
+          <div id="zip2CodeBox" style="display:none;">
+            Enter your zip to check if we deliver the Souper "Cleanse" to you. (For right now 1 is the only valid zipcode for tests)
+            <form id="zip2form">
+              <input id="zip2Input" type="text" /><br>
+              <input id="zip2BTN" type="submit"></input>
+            </form>
+          </div>
+          <button id="deliveryCheckoutButton" style="display:none;">Add to Cart</button>
+          <button id="deliveryBackBTN" style="display:none;">Back</button>
+        </center>
       </div>
 
     </div>
@@ -69,6 +94,25 @@
   <script>
 
     var zipOk = false;
+    // first Zip Check
+    function zip1check (){
+      var okZips = ['1'];
+      var value = document.getElementById('zip1Input').value;
+      var found = okZips.includes(value);
+      if (found) {
+        zipOk = true;
+        document.getElementById('zip1Answer1').style.display= 'none';
+        document.getElementById('zip1Answer2').style.display= 'block';
+      } else {
+        zipOk = false;
+        document.getElementById('zip1Answer1').style.display= 'block';
+        document.getElementById('zip1Answer2').style.display= 'none';
+      }
+    }
+    document.querySelector("#zip1form").addEventListener("submit", function(e){
+      e.preventDefault();
+      zip1check();
+    });
 
   // 1) ON PAGE LOAD DELETE ANY SNIPCARTS IF NEED BE
     function clearSnipandBTNS () {
@@ -83,7 +127,7 @@
     };
     clearSnipandBTNS ();
 
-  // 2) AFTER HITTING BUY BUTTON HIDES DIVS AND BRINGS IN DEVELIERY OPTIONS BOX
+  // 2) AFTER HITTING Checkout HIDES DIVS AND BRINGS IN DEVELIERY OPTIONS BOX
   function bringUpDeliveryOptionsBox () {
     document.getElementById('buyBTTN1').addEventListener('click', function() {
       document.getElementById('contentBox1').style.display = 'none';
@@ -154,14 +198,14 @@
 
   // 5) SELECTED DEVELIVERY NOW ZIP CODE CHECK
   function zip2check () {
-    var okZips = ['1','2','3'];
+    var okZips2 = ['1'];
     var value = document.getElementById('zip2Input').value;
-    var found = okZips.includes(value);
+    var found = okZips2.includes(value);
     if (found) {
       document.getElementById('pickupBOXandBuyBTN').style.display = 'none';
       document.getElementById('zip2CodeBox').style.display = 'none';
       document.getElementById('deliveryBOXandBuyBTN').style.display = 'block';
-      document.getElementById('deliveryMessage').style.display = 'block';
+      document.getElementById('deliveryMessage2').style.display = 'block';
       document.getElementById('deliveryCheckoutButton').style.display = 'block';
       document.getElementById('deliveryBackBTN').style.display = 'block';
     } else {
@@ -173,10 +217,11 @@
       document.getElementById('pickupCheckoutButton').style.display = 'block';
       document.getElementById('pickupBackBTN').style.display = 'block';
     }
-   }
-    document.getElementById('zip2BTN').addEventListener('click', function() {
-      zip2check ();
-    })
+  };
+  document.querySelector("#zip2form").addEventListener("submit", function(e){
+   e.preventDefault();
+   zip2check();
+  });
 
   // 6a) PICKUP checkout button click
   function pickupCheckoutBTN () {
@@ -210,7 +255,7 @@
         hiddenPickupCheckoutBTN.setAttribute('data-item-name', 'Souper Cleanse 1 (Pickup)');
         hiddenPickupCheckoutBTN.setAttribute('data-item-price', '135.00');
         hiddenPickupCheckoutBTN.setAttribute('data-item-url', 'http://myapp.com/products/bacon2');
-        hiddenPickupCheckoutBTN.setAttribute('data-item-description', 'blurb about souper cleanse 1');
+        hiddenPickupCheckoutBTN.setAttribute('data-item-description', 'blurb about souper cleanse 1 pickup');
         hiddenPickupCheckoutBTN.setAttribute('data-item-custom1-name', 'Weeks');
         hiddenPickupCheckoutBTN.setAttribute('data-item-custom1-options', '1|2[+120.00]|4[+365.00]|8[+845.00]');
         hiddenPickupCheckoutBTN.setAttribute('data-item-custom1-value', 'One Week');
@@ -270,7 +315,7 @@
         hiddenDeliveryCheckoutBTN.setAttribute('data-item-name', 'Souper Cleanse 1 (Delivery)');
         hiddenDeliveryCheckoutBTN.setAttribute('data-item-price', '135.00');
         hiddenDeliveryCheckoutBTN.setAttribute('data-item-url', 'http://myapp.com/products/bacon2');
-        hiddenDeliveryCheckoutBTN.setAttribute('data-item-description', 'blurb about souper cleanse 2');
+        hiddenDeliveryCheckoutBTN.setAttribute('data-item-description', 'blurb about souper cleanse 1 delievery');
         hiddenDeliveryCheckoutBTN.setAttribute('data-item-custom1-name', 'Weeks');
         hiddenDeliveryCheckoutBTN.setAttribute('data-item-custom1-options', '1|2[+120.00]|4[+365.00]|8[+845.00]');
         hiddenDeliveryCheckoutBTN.setAttribute('data-item-custom1-value', 'One Week');
@@ -299,46 +344,5 @@
 
   </script>
 
-
-
-<!-- <script>
-  function zipcheck () {
-    var okZips = ['1','2','3'];
-    var value = document.getElementById('zipInput').value;
-    var found = okZips.includes(value);
-    if (found) {
-      document.getElementById('zipEntry').style.display = 'none';
-      document.getElementById('zipAnswer1').style.display= 'none';
-      document.getElementById('zipAnswer2').style.display= 'block';
-    } else {
-      document.getElementById('zipAnswer1').style.display= 'block';
-      document.getElementById('zipAnswer2').style.display= 'none';
-    }
-   }
-    document.getElementById('zipBTN').addEventListener('click', function() {
-      zipcheck ();
-    })
-</script> -->
-
 </body>
 </html>
-
-
-<!-- <div id="zipEntry">
-  <br>
-  Enter your zip to check if we deliver the Souper "Cleanse" to you.
-  <input id="zipInput" type="text" />
-  <br>
-  <button id="zipBTN">Submit</button>
-</div>
-<div id="zipAnswer1" style="display:none;">
-  <br>
-  Don't deliver to you at this time.  Click <span id="backToPickup" style="color:blue; cursor:pointer;">this</span> if you want to pickup your order from our Takoma location.
-</div>
-<div id="zipAnswer2" style="display:none;">
-  <br>
-  We deliver to your zip code!<br>
-  Proceeded to check out to purchase Souper 'Cleanse' 1<br>
-  If you have any allergy questions please email thesoupergirl@gmail.com
-  <br>
-</div> -->
