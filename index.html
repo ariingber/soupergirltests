@@ -8,8 +8,6 @@
 </head>
 <body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-
-
   <link href="https://cdn.snipcart.com/themes/2.0/base/snipcart.min.css" type="text/css" rel="stylesheet" />
   <div>
     <div id="cleanse1Block" style="display: inline-block;
@@ -38,123 +36,272 @@
 
       <div id="deliveryOptionsBox" style="display:none; text-align:left; height:250px;">
         <div>Pickup or delivery</div>
-        <select name="delieveryMethod" id="delOPTS">
+        <select name="deliveryMethod" id="delOPTS">
           <option value="selectOne">Select one </option>
           <option value="pickup">I would like to pickup in Takoma</option>
           <option value="delivery">I would like to have it delievered</option>
         </select>
       </div>
 
-      <div id="pickupBOXandBuyBTN" style="display:none; text-align:left; height:250px;">
-        <br>
-        Your soup will be available for pickup at this time at this location.<br>
-        If you have any allergy questions please email thesoupergirl@gmail.com
-        <br><br>
-        <button
-          class="snipcart-add-item"
-          data-item-id="2"
-          data-item-name="Souper 'Cleanse' 1 (Pickup)"
-          data-item-price="135.00"
-          data-item-url="http://myapp.com/products/bacon2"
-          data-item-description="blurb about souper cleanse 1"
-          data-item-custom1-name="Weeks"
-          data-item-custom1-options="1|2[+120.00]|4[+365.00]|8[+845.00]"
-          data-item-custom1-value="One Week"
-          >Continue to Checkout</button>
+      <div id="pickupBOXandBuyBTN" style="display:none;">
+        <div id="pickupMessage1" class="pickupMessage" style="display:none;">pickup message 1 <br></div>
+        <div id="pickupMessage2" class="pickupMessage" style="display:none;">pickup message 2 (failed zipcheck 2)<br></div>
+        <button id="pickupCheckoutButton" style="display:none;">Checkout</button>
+        <button id="pickupBackBTN" style="display:none;">Back</button>
       </div>
 
-      <div id="deliveryBOXandBuyBTN" style="display:none; text-align:left; height:250px;">
-        <div id="zipEntry">
+      <div id="deliveryBOXandBuyBTN" style="display:none;">
+        <div id="deliveryMessage" style="display:none;">delivery message<br></div>
+        <div id="zip2CodeBox" style="display:none;">
           <br>
           Enter your zip to check if we deliver the Souper "Cleanse" to you.
-          <input id="zipInput" type="text" />
+          <input id="zip2Input" type="text" />
           <br>
-          <button id="zipBTN">Submit</button>
+          <button id="zip2BTN">Submit</button>
         </div>
-        <div id="zipAnswer1" style="display:none;">
-          <br>
-          Don't deliver to you at this time.  Click <span id="backToPickup" style="color:blue; cursor:pointer;">this</span> if you want to pickup your order from our Takoma location.
-        </div>
-        <div id="zipAnswer2" style="display:none;">
-          <br>
-          We deliver to your zip code!<br>
-          Proceeded to check out to purchase Souper 'Cleanse' 1<br>
-          If you have any allergy questions please email thesoupergirl@gmail.com
-          <br>
-          <button
-            class="snipcart-add-item"
-            data-item-id="3"
-            data-item-name="Souper 'Cleanse' 1 (Delivery)"
-            data-item-price="135.00"
-            data-item-url="http://myapp.com/products/bacon2"
-            data-item-description="blurb about souper cleanse 1 deliver option"
-            data-item-custom1-name="Weeks"
-            data-item-custom1-options="1|2[+120.00]|4[+365.00]|8[+845.00]"
-            data-item-custom1-value="One Week"
-            >Continue to Checkout</button>
-        </div>
+        <button id="deliveryCheckoutButton" style="display:none;">D Checkout</button>
+        <button id="deliveryBackBTN" style="display:none;">Back</button>
       </div>
+
     </div>
   </div>
 
   <script>
-    document.getElementById('backToPickup').addEventListener('click', function() {
-      document.getElementById('deliveryBOXandBuyBTN').style.display = 'none';
+
+    var zipOk = false;
+
+  // 1) ON PAGE LOAD DELETE ANY SNIPCARTS IF NEED BE
+    function clearSnipandBTNS () {
+      if ( document.getElementById('snipcart') ) {
+        var el = document.getElementById('snipcart');
+        el.parentNode.removeChild(el);
+      }
+      if ( document.getElementById('COBTN') ) {
+        var el = document.getElementById('COBTN');
+        el.parentNode.removeChild(el);
+      }
+    };
+    clearSnipandBTNS ();
+
+  // 2) AFTER HITTING BUY BUTTON HIDES DIVS AND BRINGS IN DEVELIERY OPTIONS BOX
+  function bringUpDeliveryOptionsBox () {
+    document.getElementById('buyBTTN1').addEventListener('click', function() {
+      document.getElementById('contentBox1').style.display = 'none';
+      document.getElementById('buyBTTN1').style.display = 'none';
       document.getElementById('deliveryOptionsBox').style.display = 'block';
     })
-  </script>
-  <script>
-    document.getElementById('buyBTTN1').addEventListener('click', function() {
-    document.getElementById('contentBox1').style.display = 'none';
-    document.getElementById('buyBTTN1').style.display = 'none';
-    document.getElementById('deliveryOptionsBox').style.display = 'block';
-    })
-  </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        if ( document.getElementById('snipcart') ) {
-          var el = document.getElementById('snipcart');
-          el.parentNode.removeChild(el);
-          console.log('done')
-        }
+  };
+  bringUpDeliveryOptionsBox ();
 
-        document.querySelector('select[name="delieveryMethod"]').onchange=changeEventHandler;
-      },false);
-
+  // 3) DELIEVER OR PICKUP CHOICE LOGIC
+  function deliverPickupChoiceLogic () {
+    document.querySelector('select[name="deliveryMethod"]').onchange=changeEventHandler;
       function changeEventHandler(event) {
-        var pickupCheckoutScript = document.createElement('script');
-        var deliveryCheckoutScript = document.createElement('script');
         if (event.target.value === 'pickup') {
           document.getElementById('deliveryOptionsBox').style.display = 'none';
           document.getElementById('deliveryBOXandBuyBTN').style.display = 'none';
           document.getElementById('pickupBOXandBuyBTN').style.display = 'block';
-          pickupCheckoutScript.setAttribute('src','https://cdn.snipcart.com/scripts/2.0/snipcart.js');
-          pickupCheckoutScript.setAttribute('type','text/javascript');
-          pickupCheckoutScript.setAttribute('id','snipcart');
-          pickupCheckoutScript.setAttribute('data-api-key','OWVlOGQxMTQtY2JiOC00ZWIwLWFlNzYtYmYxNjAxN2JkYWQ3NjM2MjQ0MDU4NjU2MTg1NDMw');
-          pickupCheckoutScript.setAttribute('data-cart-custom1-name','I understand the disclaimer and terms of use regarding the purchase of this product.');
-          pickupCheckoutScript.setAttribute('data-cart-custom1-options','true|false');
-          pickupCheckoutScript.setAttribute('data-cart-custom1-required','true');
-          document.head.appendChild(pickupCheckoutScript);
+          document.getElementById('pickupMessage1').style.display = 'block';
+          document.getElementById('pickupCheckoutButton').style.display = 'block';
+          document.getElementById('pickupBackBTN').style.display = 'block';
         }
-        else {
+        else if (event.target.value === 'delivery')  {
           document.getElementById('deliveryOptionsBox').style.display = 'none';
-          document.getElementById('deliveryBOXandBuyBTN').style.display = 'block';
-          document.getElementById('pickupBOXandBuyBTN').style.display = 'none';
-          deliveryCheckoutScript.setAttribute('src','https://cdn.snipcart.com/scripts/2.0/snipcart.js');
-          deliveryCheckoutScript.setAttribute('type','text/javascript');
-          deliveryCheckoutScript.setAttribute('id','snipcart');
-          deliveryCheckoutScript.setAttribute('data-api-key','OWVlOGQxMTQtY2JiOC00ZWIwLWFlNzYtYmYxNjAxN2JkYWQ3NjM2MjQ0MDU4NjU2MTg1NDMw');
-          deliveryCheckoutScript.setAttribute('data-cart-custom1-name','Delivery Address Street City Zipcode');
-          deliveryCheckoutScript.setAttribute('data-cart-custom2-name','Addtional Delivery Instructions');
-          deliveryCheckoutScript.setAttribute('data-cart-custom3-name','I understand the disclaimer and terms of use regarding the purchase of this product.');
-          deliveryCheckoutScript.setAttribute('data-cart-custom3-options','true|false');
-          deliveryCheckoutScript.setAttribute('data-cart-custom3-required','true');
-          document.head.appendChild(deliveryCheckoutScript);
+
+          if (zipOk) {
+            document.getElementById('pickupBOXandBuyBTN').style.display = 'none';
+            document.getElementById('deliveryBOXandBuyBTN').style.display = 'block';
+            document.getElementById('deliveryMessage').style.display = 'block';
+            document.getElementById('deliveryCheckoutButton').style.display = 'block';
+            document.getElementById('deliveryBackBTN').style.display = 'block';
+          }
+          else {
+            document.getElementById('pickupBOXandBuyBTN').style.display = 'none';
+            document.getElementById('deliveryBOXandBuyBTN').style.display = 'block';
+            document.getElementById('zip2CodeBox').style.display = 'block';
+            document.getElementById('deliveryBackBTN').style.display = 'block';
+          }
         }
+    }
+  };
+  deliverPickupChoiceLogic ();
+
+  // 4 a) SELECTED PICkUP NOW BACK BUTTON FUNCTION
+  function pickupBackBTN () {
+    document.getElementById('pickupBackBTN').addEventListener('click', function() {
+      document.getElementById('deliveryOptionsBox').style.display = 'block';
+      document.getElementById('pickupBOXandBuyBTN').style.display = 'none';
+      document.getElementById('pickupMessage1').style.display = 'none';
+      document.getElementById('pickupCheckoutButton').style.display = 'none';
+      document.getElementById('pickupBackBTN').style.display = 'none';
+      document.querySelector('select[name="deliveryMethod"]').value = 'selectOne';
+    })
+  };
+  pickupBackBTN ();
+
+  // 4 b) DELIVERY BACK BUTTON FUNCTION
+  function deliveryBackBTN () {
+    document.getElementById('deliveryBackBTN').addEventListener('click', function() {
+      document.getElementById('deliveryOptionsBox').style.display = 'block';
+      document.getElementById('deliveryBOXandBuyBTN').style.display = 'none';
+      document.getElementById('deliveryMessage').style.display = 'none';
+      document.getElementById('deliveryCheckoutButton').style.display = 'none';
+      document.getElementById('deliveryBackBTN').style.display = 'none';
+      document.querySelector('select[name="deliveryMethod"]').value = 'selectOne';
+    })
+  };
+  deliveryBackBTN ();
+
+  // 5) SELECTED DEVELIVERY NOW ZIP CODE CHECK
+  function zip2check () {
+    var okZips = ['1','2','3'];
+    var value = document.getElementById('zip2Input').value;
+    var found = okZips.includes(value);
+    if (found) {
+      document.getElementById('pickupBOXandBuyBTN').style.display = 'none';
+      document.getElementById('zip2CodeBox').style.display = 'none';
+      document.getElementById('deliveryBOXandBuyBTN').style.display = 'block';
+      document.getElementById('deliveryMessage').style.display = 'block';
+      document.getElementById('deliveryCheckoutButton').style.display = 'block';
+      document.getElementById('deliveryBackBTN').style.display = 'block';
+    } else {
+      document.getElementById('deliveryBOXandBuyBTN').style.display = 'none';
+      document.getElementById('deliveryBackBTN').style.display = 'none';
+      document.getElementById('zip2CodeBox').style.display = 'none';
+      document.getElementById('pickupBOXandBuyBTN').style.display = 'block';
+      document.getElementById('pickupMessage2').style.display = 'block';
+      document.getElementById('pickupCheckoutButton').style.display = 'block';
+      document.getElementById('pickupBackBTN').style.display = 'block';
+    }
+   }
+    document.getElementById('zip2BTN').addEventListener('click', function() {
+      zip2check ();
+    })
+
+  // 6a) PICKUP checkout button click
+  function pickupCheckoutBTN () {
+    document.getElementById('pickupCheckoutButton').addEventListener('click', function() {
+
+      function createPickupSnip() {
+        if ( document.getElementById('snipcart') ) {
+          var el = document.getElementById('snipcart');
+          el.parentNode.removeChild(el);
+        }
+        var pickupCheckoutScript = document.createElement('script');
+        pickupCheckoutScript.setAttribute('src','https://cdn.snipcart.com/scripts/2.0/snipcart.js');
+        pickupCheckoutScript.setAttribute('type','text/javascript');
+        pickupCheckoutScript.setAttribute('id','snipcart');
+        pickupCheckoutScript.setAttribute('data-api-key','OWVlOGQxMTQtY2JiOC00ZWIwLWFlNzYtYmYxNjAxN2JkYWQ3NjM2MjQ0MDU4NjU2MTg1NDMw');
+        pickupCheckoutScript.setAttribute('data-cart-custom1-name','I understand the disclaimer and terms of use regarding the purchase of this product.');
+        pickupCheckoutScript.setAttribute('data-cart-custom1-options','true|false');
+        pickupCheckoutScript.setAttribute('data-cart-custom1-required','true');
+        document.head.appendChild(pickupCheckoutScript);
+      };
+
+      function createPickupButton () {
+        if ( document.getElementById('COBTN') ) {
+          var el = document.getElementById('COBTN');
+          el.parentNode.removeChild(el);
+        }
+        var hiddenPickupCheckoutBTN = document.createElement('button');
+        hiddenPickupCheckoutBTN.setAttribute('id', 'COBTN');
+        hiddenPickupCheckoutBTN.setAttribute('class', 'snipcart-add-item');
+        hiddenPickupCheckoutBTN.setAttribute('data-item-id', '2');
+        hiddenPickupCheckoutBTN.setAttribute('data-item-name', 'Souper Cleanse 1 (Pickup)');
+        hiddenPickupCheckoutBTN.setAttribute('data-item-price', '135.00');
+        hiddenPickupCheckoutBTN.setAttribute('data-item-url', 'http://myapp.com/products/bacon2');
+        hiddenPickupCheckoutBTN.setAttribute('data-item-description', 'blurb about souper cleanse 1');
+        hiddenPickupCheckoutBTN.setAttribute('data-item-custom1-name', 'Weeks');
+        hiddenPickupCheckoutBTN.setAttribute('data-item-custom1-options', '1|2[+120.00]|4[+365.00]|8[+845.00]');
+        hiddenPickupCheckoutBTN.setAttribute('data-item-custom1-value', 'One Week');
+        document.head.appendChild(hiddenPickupCheckoutBTN);
+      };
+      function firePickupButton () {
+        document.getElementById('COBTN').click();
+      };
+      function closeSnipcart () {
+        document.getElementById('snipcart-close').addEventListener('click', function() {
+          window.location.reload();
+        })
       }
+      createPickupSnip();
+      createPickupButton();
+      setTimeout(function () {
+        firePickupButton ();
+      }, 1000);
+      setTimeout(function () {
+        closeSnipcart();
+      }, 1500);
+    })
+  }
+  pickupCheckoutBTN ();
+
+  // 6b) DELIVERY checkout button click
+  function deliveryCheckoutBTN () {
+    document.getElementById('deliveryCheckoutButton').addEventListener('click', function() {
+
+      function createDeliverySnip() {
+        if ( document.getElementById('snipcart') ) {
+          var el = document.getElementById('snipcart');
+          el.parentNode.removeChild(el);
+        }
+        var deliveryCheckoutScript = document.createElement('script');
+        deliveryCheckoutScript.setAttribute('src','https://cdn.snipcart.com/scripts/2.0/snipcart.js');
+        deliveryCheckoutScript.setAttribute('type','text/javascript');
+        deliveryCheckoutScript.setAttribute('id','snipcart');
+        deliveryCheckoutScript.setAttribute('data-api-key','OWVlOGQxMTQtY2JiOC00ZWIwLWFlNzYtYmYxNjAxN2JkYWQ3NjM2MjQ0MDU4NjU2MTg1NDMw');
+        deliveryCheckoutScript.setAttribute('data-cart-custom1-name','Delivery Address Street City Zipcode');
+        deliveryCheckoutScript.setAttribute('data-cart-custom2-name','Addtional Delivery Instructions');
+        deliveryCheckoutScript.setAttribute('data-cart-custom3-name','I understand the disclaimer and terms of use regarding the purchase of this product.');
+        deliveryCheckoutScript.setAttribute('data-cart-custom3-options','true|false');
+        deliveryCheckoutScript.setAttribute('data-cart-custom3-required','true');
+        document.head.appendChild(deliveryCheckoutScript);
+      };
+
+      function createDeliveryButton () {
+        if ( document.getElementById('delChkOutBTN') ) {
+          var el = document.getElementById('delChkOutBTN');
+          el.parentNode.removeChild(el);
+        }
+        var hiddenDeliveryCheckoutBTN = document.createElement('button');
+        hiddenDeliveryCheckoutBTN.setAttribute('id', 'delChkOutBTN');
+        hiddenDeliveryCheckoutBTN.setAttribute('class', 'snipcart-add-item');
+        hiddenDeliveryCheckoutBTN.setAttribute('data-item-id', '2');
+        hiddenDeliveryCheckoutBTN.setAttribute('data-item-name', 'Souper Cleanse 1 (Delivery)');
+        hiddenDeliveryCheckoutBTN.setAttribute('data-item-price', '135.00');
+        hiddenDeliveryCheckoutBTN.setAttribute('data-item-url', 'http://myapp.com/products/bacon2');
+        hiddenDeliveryCheckoutBTN.setAttribute('data-item-description', 'blurb about souper cleanse 2');
+        hiddenDeliveryCheckoutBTN.setAttribute('data-item-custom1-name', 'Weeks');
+        hiddenDeliveryCheckoutBTN.setAttribute('data-item-custom1-options', '1|2[+120.00]|4[+365.00]|8[+845.00]');
+        hiddenDeliveryCheckoutBTN.setAttribute('data-item-custom1-value', 'One Week');
+        document.head.appendChild(hiddenDeliveryCheckoutBTN);
+      };
+      function fireDeliveryButton () {
+        document.getElementById('delChkOutBTN').click();
+      };
+      function closeSnipcart () {
+        document.getElementById('snipcart-close').addEventListener('click', function() {
+          window.location.reload();
+        })
+      }
+
+      createDeliverySnip();
+      createDeliveryButton();
+      setTimeout(function () {
+        fireDeliveryButton ();
+      }, 1000);
+      setTimeout(function () {
+        closeSnipcart();
+      }, 1500);
+    })
+  }
+  deliveryCheckoutBTN ();
+
   </script>
-<script>
+
+
+
+<!-- <script>
   function zipcheck () {
     var okZips = ['1','2','3'];
     var value = document.getElementById('zipInput').value;
@@ -171,7 +318,27 @@
     document.getElementById('zipBTN').addEventListener('click', function() {
       zipcheck ();
     })
-</script>
+</script> -->
 
 </body>
 </html>
+
+
+<!-- <div id="zipEntry">
+  <br>
+  Enter your zip to check if we deliver the Souper "Cleanse" to you.
+  <input id="zipInput" type="text" />
+  <br>
+  <button id="zipBTN">Submit</button>
+</div>
+<div id="zipAnswer1" style="display:none;">
+  <br>
+  Don't deliver to you at this time.  Click <span id="backToPickup" style="color:blue; cursor:pointer;">this</span> if you want to pickup your order from our Takoma location.
+</div>
+<div id="zipAnswer2" style="display:none;">
+  <br>
+  We deliver to your zip code!<br>
+  Proceeded to check out to purchase Souper 'Cleanse' 1<br>
+  If you have any allergy questions please email thesoupergirl@gmail.com
+  <br>
+</div> -->
