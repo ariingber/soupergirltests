@@ -96,7 +96,7 @@
     // CLEAR SNIP CART AT THE BEGGINING
     document.addEventListener("DOMContentLoaded", function() {
       if (typeof Snipcart !== 'undefined') {
-        Snipcart.api.items.clear();
+        Snipcart.api.items.all.clear();
         alert('cleared');
       }
     });
@@ -275,7 +275,7 @@
       function closeSnipcart () {
         document.getElementById('snipcart-close').addEventListener('click', function() {
           alert('clearing')
-          Snipcart.api.items.clear();
+          Snipcart.api.items.all.clear();
           window.location.reload();
         })
       }
@@ -337,7 +337,7 @@
       function closeSnipcart () {
         document.getElementById('snipcart-close').addEventListener('click', function() {
           alert('clearing')
-          Snipcart.api.items.clear();
+          Snipcart.api.items.all.clear();
           window.location.reload();
         })
       }
