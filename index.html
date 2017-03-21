@@ -93,6 +93,13 @@
   </div>
 
   <script>
+    // CLEAR SNIP CART AT THE BEGGINING
+    document.addEventListener("DOMContentLoaded", function() {
+      if (typeof Snipcart !== 'undefined') {
+        Snipcart.api.items.clear();
+        alert('cleared');
+      }
+    });
 
     var zipOk = false;
     // first Zip Check
