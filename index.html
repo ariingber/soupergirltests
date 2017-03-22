@@ -233,6 +233,9 @@
           var el = document.getElementById('snipcart');
           el.parentNode.removeChild(el);
         }
+        if (typeof Snipcart !== "undefined") {
+          Snipcart.api.items.clear();
+        }
         var pickupCheckoutScript = document.createElement('script');
         pickupCheckoutScript.setAttribute('src','https://cdn.snipcart.com/scripts/2.0/snipcart.js');
         pickupCheckoutScript.setAttribute('type','text/javascript');
@@ -249,6 +252,9 @@
         if ( document.getElementById('COBTN') ) {
           var el = document.getElementById('COBTN');
           el.parentNode.removeChild(el);
+        }
+        if (typeof Snipcart !== "undefined") {
+          Snipcart.api.items.clear();
         }
         var hiddenPickupCheckoutBTN = document.createElement('button');
         hiddenPickupCheckoutBTN.setAttribute('id', 'COBTN');
@@ -298,6 +304,9 @@
           var el = document.getElementById('snipcart');
           el.parentNode.removeChild(el);
         }
+        if (typeof Snipcart !== "undefined") {
+          Snipcart.api.items.clear();
+        }
         var deliveryCheckoutScript = document.createElement('script');
         deliveryCheckoutScript.setAttribute('src','https://cdn.snipcart.com/scripts/2.0/snipcart.js');
         deliveryCheckoutScript.setAttribute('type','text/javascript');
@@ -319,6 +328,9 @@
         if ( document.getElementById('delChkOutBTN') ) {
           var el = document.getElementById('delChkOutBTN');
           el.parentNode.removeChild(el);
+        }
+        if (typeof Snipcart !== "undefined") {
+          Snipcart.api.items.clear();
         }
         var hiddenDeliveryCheckoutBTN = document.createElement('button');
         hiddenDeliveryCheckoutBTN.setAttribute('id', 'delChkOutBTN');
