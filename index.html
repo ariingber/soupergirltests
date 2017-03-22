@@ -238,9 +238,10 @@
         pickupCheckoutScript.setAttribute('type','text/javascript');
         pickupCheckoutScript.setAttribute('id','snipcart');
         pickupCheckoutScript.setAttribute('data-api-key','OWVlOGQxMTQtY2JiOC00ZWIwLWFlNzYtYmYxNjAxN2JkYWQ3NjM2MjQ0MDU4NjU2MTg1NDMw');
-        pickupCheckoutScript.setAttribute('data-cart-custom1-name','I understand the disclaimer and terms of use regarding the purchase of this product.');
+        pickupCheckoutScript.setAttribute('data-cart-custom1-name',"I understand the disclaimer and terms of use regarding the purchase of this product.");
         pickupCheckoutScript.setAttribute('data-cart-custom1-options','true|false');
         pickupCheckoutScript.setAttribute('data-cart-custom1-required','true');
+        pickupCheckoutScript.setAttribute('data-cart-custom2-name','If you have allergies or dietary restrictions, please email us at cleanse@soupergirl.com.');
         document.head.appendChild(pickupCheckoutScript);
       };
 
@@ -256,7 +257,7 @@
         hiddenPickupCheckoutBTN.setAttribute('data-item-name', 'Souper Cleanse 1 (Pickup)');
         hiddenPickupCheckoutBTN.setAttribute('data-item-price', '135.00');
         hiddenPickupCheckoutBTN.setAttribute('data-item-url', 'http://myapp.com/products/bacon2');
-        hiddenPickupCheckoutBTN.setAttribute('data-item-description', 'blurb about souper cleanse 1 pickup');
+        hiddenPickupCheckoutBTN.setAttribute('data-item-description', 'If you have allergies or dietary restrictions, please email us at cleanse@soupergirl.com.');
         hiddenPickupCheckoutBTN.setAttribute('data-item-custom1-name', 'Weeks');
         hiddenPickupCheckoutBTN.setAttribute('data-item-custom1-options', '1|2[+120.00]|4[+365.00]|8[+845.00]');
         hiddenPickupCheckoutBTN.setAttribute('data-item-custom1-value', 'One Week');
@@ -267,6 +268,9 @@
       };
       function closeSnipcart () {
         document.getElementById('snipcart-close').addEventListener('click', function() {
+          if (typeof Snipcart !== "undefined") {
+            Snipcart.api.items.clear();
+          }
           window.location.reload();
         })
       }
@@ -299,11 +303,15 @@
         deliveryCheckoutScript.setAttribute('type','text/javascript');
         deliveryCheckoutScript.setAttribute('id','snipcart');
         deliveryCheckoutScript.setAttribute('data-api-key','OWVlOGQxMTQtY2JiOC00ZWIwLWFlNzYtYmYxNjAxN2JkYWQ3NjM2MjQ0MDU4NjU2MTg1NDMw');
-        deliveryCheckoutScript.setAttribute('data-cart-custom1-name','Delivery Address Street City Zipcode');
-        deliveryCheckoutScript.setAttribute('data-cart-custom2-name','Addtional Delivery Instructions');
-        deliveryCheckoutScript.setAttribute('data-cart-custom3-name','I understand the disclaimer and terms of use regarding the purchase of this product.');
-        deliveryCheckoutScript.setAttribute('data-cart-custom3-options','true|false');
-        deliveryCheckoutScript.setAttribute('data-cart-custom3-required','true');
+        deliveryCheckoutScript.setAttribute('data-cart-custom1-name','Delivery Address');
+        deliveryCheckoutScript.setAttribute('data-cart-custom2-name','Delivery Address City');
+        deliveryCheckoutScript.setAttribute('data-cart-custom3-name','Delivery Address State');
+        deliveryCheckoutScript.setAttribute('data-cart-custom4-name','Delivery Address Zip');
+        deliveryCheckoutScript.setAttribute('data-cart-custom5-name','Addtional Delivery Instructions');
+        deliveryCheckoutScript.setAttribute('data-cart-custom6-name','I understand the disclaimer and terms of use regarding the purchase of this product.');
+        deliveryCheckoutScript.setAttribute('data-cart-custom6-options','true|false');
+        deliveryCheckoutScript.setAttribute('data-cart-custom6-required','true');
+        deliveryCheckoutScript.setAttribute('data-cart-custom7-name','If you have allergies or dietary restrictions, please email us at cleanse@soupergirl.com.');
         document.head.appendChild(deliveryCheckoutScript);
       };
 
@@ -319,7 +327,7 @@
         hiddenDeliveryCheckoutBTN.setAttribute('data-item-name', 'Souper Cleanse 1 (Delivery)');
         hiddenDeliveryCheckoutBTN.setAttribute('data-item-price', '135.00');
         hiddenDeliveryCheckoutBTN.setAttribute('data-item-url', 'http://myapp.com/products/bacon2');
-        hiddenDeliveryCheckoutBTN.setAttribute('data-item-description', 'blurb about souper cleanse 1 delievery');
+        hiddenDeliveryCheckoutBTN.setAttribute('data-item-description', 'If you have allergies or dietary restrictions, please email us at cleanse@soupergirl.com.');
         hiddenDeliveryCheckoutBTN.setAttribute('data-item-custom1-name', 'Weeks');
         hiddenDeliveryCheckoutBTN.setAttribute('data-item-custom1-options', '1|2[+120.00]|4[+365.00]|8[+845.00]');
         hiddenDeliveryCheckoutBTN.setAttribute('data-item-custom1-value', 'One Week');
@@ -330,6 +338,9 @@
       };
       function closeSnipcart () {
         document.getElementById('snipcart-close').addEventListener('click', function() {
+          if (typeof Snipcart !== "undefined") {
+            Snipcart.api.items.clear();
+          }
           window.location.reload();
         })
       }
