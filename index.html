@@ -277,6 +277,15 @@
           if (typeof Snipcart !== "undefined") {
             Snipcart.api.items.clear();
           }
+          if ( $('#snipcart') ) {
+            $('#snipcart').remove();
+          }
+          if ( $('#delChkOutBTN') ) {
+            $('#delChkOutBTN').remove();
+          }
+          if ( $('#COBTN') ) {
+            $('#COBTN').remove();
+          }
           window.location.reload();
         })
       }
@@ -352,6 +361,15 @@
         document.getElementById('snipcart-close').addEventListener('click', function() {
           if (typeof Snipcart !== "undefined") {
             Snipcart.api.items.clear();
+          }
+          if ( $('#snipcart') ) {
+            $('#snipcart').remove();
+          }
+          if ( $('#delChkOutBTN') ) {
+            $('#delChkOutBTN').remove();
+          }
+          if ( $('#COBTN') ) {
+            $('#COBTN').remove();
           }
           window.location.reload();
         })
