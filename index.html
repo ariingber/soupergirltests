@@ -270,12 +270,12 @@
           window.location.reload();
         })
       }
-      if (typeof Snipcart !== "undefined") {
-        Snipcart.api.items.clear();
-      }
       createPickupSnip();
       createPickupButton();
       setTimeout(function () {
+        if (typeof Snipcart !== "undefined") {
+          Snipcart.api.items.clear();
+        }
         firePickupButton ();
       }, 1000);
       setTimeout(function () {
@@ -333,12 +333,12 @@
           window.location.reload();
         })
       }
-      if (typeof Snipcart !== "undefined") {
-        Snipcart.api.items.clear();
-      }
       createDeliverySnip();
       createDeliveryButton();
       setTimeout(function () {
+        if (typeof Snipcart !== "undefined") {
+          Snipcart.api.items.clear();
+        }
         fireDeliveryButton ();
       }, 1000);
       setTimeout(function () {
