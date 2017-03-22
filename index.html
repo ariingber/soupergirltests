@@ -94,6 +94,11 @@
 
   <script>
   $( document ).ready(function() {
+    chrome.benchmarking.clearCache();
+    chrome.benchmarking.clearHostResolverCache();
+    chrome.benchmarking.clearPredictorCache();
+    chrome.benchmarking.closeConnections();
+    
     var zipOk = false;
     // first Zip Check
     function zip1check (){
