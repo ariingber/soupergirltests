@@ -117,14 +117,13 @@
 
   // 1) ON PAGE LOAD DELETE ANY SNIPCARTS IF NEED BE
     function clearSnipandBTNS () {
-      if ( $('#snipcart') ) {
-        $('#snipcart').remove();
+      if ( document.getElementById('snipcart') ) {
+        var el = document.getElementById('snipcart');
+        el.parentNode.removeChild(el);
       }
-      if ( $('#COBTN') ) {
-        $('#COBTN').remove();
-      }
-      if ( $('#delChkOutBTN') ) {
-        $('#delChkOutBTN' ).remove();
+      if ( document.getElementById('COBTN') ) {
+        var el = document.getElementById('COBTN');
+        el.parentNode.removeChild(el);
       }
     };
     clearSnipandBTNS ();
@@ -228,15 +227,15 @@
   // 6a) PICKUP checkout button click
   function pickupCheckoutBTN () {
     document.getElementById('pickupCheckoutButton').addEventListener('click', function() {
-      clearSnipandBTNS ();
 
       function createPickupSnip() {
         if ( document.getElementById('snipcart') ) {
-          $('#snipcart').remove();
           var el = document.getElementById('snipcart');
           el.parentNode.removeChild(el);
         }
-
+        if (typeof Snipcart !== "undefined") {
+          Snipcart.api.items.clear();
+        }
         var pickupCheckoutScript = document.createElement('script');
         pickupCheckoutScript.setAttribute('src','https://cdn.snipcart.com/scripts/2.0/snipcart.js');
         pickupCheckoutScript.setAttribute('type','text/javascript');
