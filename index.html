@@ -95,10 +95,6 @@
   <script>
   $( document ).ready(function() {
 
-    if (typeof Snipcart !== "undefined") {
-      alert('yeah')
-    } else { alert('no') }
-
     var zipOk = false;
     // first Zip Check
     function zip1check (){
@@ -242,7 +238,8 @@
           Snipcart.api.items.clear();
         }
         var pickupCheckoutScript = document.createElement('script');
-        pickupCheckoutScript.setAttribute('src','https://cdn.snipcart.com/scripts/2.0/snipcart.js?version=2.3.3');
+        var src1 = 'https://cdn.snipcart.com/scripts/2.0/snipcart.js?=' +  $.now() + '?';
+        pickupCheckoutScript.setAttribute('src', src1);
         pickupCheckoutScript.setAttribute('type','text/javascript');
         pickupCheckoutScript.setAttribute('id','snipcart');
         pickupCheckoutScript.setAttribute('data-api-key','OWVlOGQxMTQtY2JiOC00ZWIwLWFlNzYtYmYxNjAxN2JkYWQ3NjM2MjQ0MDU4NjU2MTg1NDMw');
@@ -322,7 +319,8 @@
           Snipcart.api.items.clear();
         }
         var deliveryCheckoutScript = document.createElement('script');
-        deliveryCheckoutScript.setAttribute('src','https://cdn.snipcart.com/scripts/2.0/snipcart.js?version=1.0.0');
+        var src2 = 'https://cdn.snipcart.com/scripts/2.0/snipcart.js?=' +  $.now() + '?';
+        deliveryCheckoutScript.setAttribute('src', src2 );
         deliveryCheckoutScript.setAttribute('type','text/javascript');
         deliveryCheckoutScript.setAttribute('id','snipcart');
         deliveryCheckoutScript.setAttribute('data-api-key','OWVlOGQxMTQtY2JiOC00ZWIwLWFlNzYtYmYxNjAxN2JkYWQ3NjM2MjQ0MDU4NjU2MTg1NDMw');
