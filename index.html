@@ -98,7 +98,21 @@
     var zipOk = false;
     // first Zip Check
     function zip1check (){
-      var okZips = ['1'];
+      var okZips = ['20170','20171','20190','20191','20194','22015', '22027', '22030', '22031', '22032', '22033', '22034', '22035', '22036', '22037',
+      '22038', '22039', '22040', '22041', '22042', '22043', '22044', '22046', '22066', '22101', '22102', '22124', '22150', '22151', '22152', '22153',
+      '22180', '22181', '22182', '22201', '22202', '22203', '22204', '22205', '22206', '22207', '22209','22211', '22213', '22230', '22240', '22301',
+      '22302', '22303', '22304', '22305', '22306', '22307', '22308', '22309', '22310', '22311', '22312', '22314', '20001', '20002', '20003', '20004',
+      '20005', '20006', '20007', '20008', '20009', '20010', '20011', '20012', '20013', '20015', '20016', '20017', '20018', '20019', '20024', '20036',
+      '20037', '20045', '20052', '20056', '20057', '20059', '20062', '20064', '20071', '20201', '20202', '20204', '20210', '20212', '20216',  '20217',
+      '20219', '20220', '20223', '20224', '20226', '20227', '20228', '20229', '20230', '20237', '20240', '20242', '20245', '20250', '20260', '20268',
+      '20307', '20310', '20314', '20319', '20401', '20408', '20410', '20415', '20416', '20420', '20422', '20426', '20427', '20431', '20433', '20436',
+      '20442', '20460', '20502', '20503', '20506', '20510', '20515', '20520', '20526', '20528', '20529', '20530', '20532', '20534', '20535', '20536',
+      '20540', '20543', '20544', '20546', '20547', '20548', '20551', '20560', '20566', '20571', '20577', '20579', '20580', '20585', '20590',  '20591',
+       '20597', '20737', '20740', '20742', '20781', '20782', '20783', '20785', '20122', '21041', '21042', '21043', '21044', '21045', '21046', '21093',
+       '21117', '21130', '21153', '21201', '21202', '21205', '21206', '21208', '21209', '21210', '21211', '21212', '21213', '21213', '21214', '21215',
+       '21215', '21216', '21217', '21218', '21223', '21224', '21228', '21229', '21230',  '21239', '21282', '20812', '20814', '20815', '20816', '20817',
+       '20818', '20850', '20851', '20852', '20853', '20854', '20855', '20872', '20878', '20882', '20889', '20892', '20894', '20895', '20896', '20901',
+       '20902', '20903', '20904', '20906', '20910', '20912' ];
       var value = document.getElementById('zip1Input').value;
       var found = okZips.includes(value);
       if (found) {
@@ -238,14 +252,14 @@
           Snipcart.api.items.clear();
         }
         var pickupCheckoutScript = document.createElement('script');
-        pickupCheckoutScript.setAttribute('src','https://cdn.snipcart.com/scripts/2.0/snipcart.js?version=2.3.3');
+        pickupCheckoutScript.setAttribute('src','https://cdn.snipcart.com/scripts/2.0/snipcart.js');
         pickupCheckoutScript.setAttribute('type','text/javascript');
         pickupCheckoutScript.setAttribute('id','snipcart');
         pickupCheckoutScript.setAttribute('data-api-key','OWVlOGQxMTQtY2JiOC00ZWIwLWFlNzYtYmYxNjAxN2JkYWQ3NjM2MjQ0MDU4NjU2MTg1NDMw');
         pickupCheckoutScript.setAttribute('data-cart-custom1-name',"I understand the disclaimer and terms of use regarding the purchase of this product.");
         pickupCheckoutScript.setAttribute('data-cart-custom1-options','true|false');
         pickupCheckoutScript.setAttribute('data-cart-custom1-required','true');
-        pickupCheckoutScript.setAttribute('data-cart-custom2-name','If you have allergies or dietary restrictions, please email us at cleanse@soupergirl.com.');
+        pickupCheckoutScript.setAttribute('data-cart-custom2-name','Allergy text box.');
         document.head.appendChild(pickupCheckoutScript);
       };
 
@@ -264,7 +278,7 @@
         hiddenPickupCheckoutBTN.setAttribute('data-item-name', 'Souper Cleanse 1 (Pickup)');
         hiddenPickupCheckoutBTN.setAttribute('data-item-price', '135.00');
         hiddenPickupCheckoutBTN.setAttribute('data-item-url', 'http://myapp.com/products/bacon4');
-        hiddenPickupCheckoutBTN.setAttribute('data-item-description', 'If you have allergies or dietary restrictions, please email us at cleanse@soupergirl.com.');
+        hiddenPickupCheckoutBTN.setAttribute('data-item-description', 'Please indicate the number of weeks you are purchansing and the quantities of cleanses.  If you deliever two weeks you will get two weeks in a row.');
         hiddenPickupCheckoutBTN.setAttribute('data-item-custom1-name', 'Weeks');
         hiddenPickupCheckoutBTN.setAttribute('data-item-custom1-options', '1|2[+120.00]|4[+365.00]|8[+845.00]');
         hiddenPickupCheckoutBTN.setAttribute('data-item-custom1-value', 'One Week');
@@ -318,7 +332,7 @@
           Snipcart.api.items.clear();
         }
         var deliveryCheckoutScript = document.createElement('script');
-        deliveryCheckoutScript.setAttribute('src','https://cdn.snipcart.com/scripts/2.0/snipcart.js?version=1.0.0');
+        deliveryCheckoutScript.setAttribute('src','https://cdn.snipcart.com/scripts/2.0/snipcart.js');
         deliveryCheckoutScript.setAttribute('type','text/javascript');
         deliveryCheckoutScript.setAttribute('id','snipcart');
         deliveryCheckoutScript.setAttribute('data-api-key','OWVlOGQxMTQtY2JiOC00ZWIwLWFlNzYtYmYxNjAxN2JkYWQ3NjM2MjQ0MDU4NjU2MTg1NDMw');
